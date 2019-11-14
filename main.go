@@ -1,45 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"net/http"
 
-type Hello struct {
-	Name string
-	age  int
-}
+	"github.com/labstack/echo"
+)
 
 func main() {
-	newstruct := new(Hello)
-	newstruct.Name = "asdasda"
-	newstruct.age = 10
+	e := echo.New()
 
-	fmt.Printf("%+v\n", newstruct)
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello, World!")
+	})
 
-	newcustomstruct := make(map[string]interface{})
-	newcustomstruct["name"] = "asdasdad"
-	newcustomstruct["ageage"] = 10
+	s := &http.Server{
+		Addr: ":7000",
+	}
 
-	fmt.Printf("%+v\n", newcustomstruct)
-
-	var helloWorld1 string
-	helloWorld1 = "Hello world 1"
-
-	helloWorld2 := "Hello world 2"
-
-	var helloWorld3 = "Hello world 3"
-
-	var helloWorld4 string = "Hello world 4"
-
-	var helloWorld5, helloWorld6 string
-	helloWorld5 = "Hello world 5"
-	helloWorld6 = "Hello world 6"
-
-	var helloWorld7 = string("Hello world 7")
-
-	fmt.Println(helloWorld1)
-	fmt.Println(helloWorld2)
-	fmt.Println(helloWorld3)
-	fmt.Println(helloWorld4)
-	fmt.Println(helloWorld5)
-	fmt.Println(helloWorld6)
-	fmt.Println(helloWorld7)
+	e.Logger.Fatal(e.StartServer(s))
 }
