@@ -2,9 +2,9 @@ package user
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
+	"github.com/cyphereza/microservice-crash-course/model"
 	"github.com/cyphereza/microservice-crash-course/repository"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -28,7 +28,7 @@ func (mdb *mysqlRepository) Create(name string) (string, error) {
 	return "", nil
 }
 
-func (mdb *mysqlRepository) RetrieveUserByName(name string) (string, error) {
+func (mdb *mysqlRepository) RetrieveUserByName(name string) (output []model.User, err error) {
 	results, err := mdb.sess.Query("SELECT id, name FROM user WHERE name like '%" + name + "%'")
 	if err != nil {
 		log.Fatalln(err.Error())
@@ -43,10 +43,13 @@ func (mdb *mysqlRepository) RetrieveUserByName(name string) (string, error) {
 			log.Fatalln(err.Error())
 		}
 
-		fmt.Println(idOutput, nameString)
+		row := new(model.User)
+		row.ID = idOutput
+		row.Name = nameString
+		output = append(output, *row)
 	}
 
-	return "", nil
+	return output, nil
 }
 
 func (mdb *mysqlRepository) RetrieveUserByID(id string) (string, error) {

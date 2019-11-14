@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/cyphereza/microservice-crash-course/model"
 	"github.com/cyphereza/microservice-crash-course/repository"
 	"github.com/cyphereza/microservice-crash-course/usecase"
 )
@@ -19,7 +20,7 @@ func (uc *userUsecase) CreateUser(name string) (string, error) {
 	return "", nil
 }
 
-func (uc *userUsecase) RetrieveUser(name string) (string, error) {
-	_, _ = uc.repo.RetrieveUserByName(name)
-	return "", nil
+func (uc *userUsecase) RetrieveUser(name string) ([]model.User, error) {
+	result, _ := uc.repo.RetrieveUserByName(name)
+	return result, nil
 }

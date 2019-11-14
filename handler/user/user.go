@@ -1,6 +1,9 @@
 package user
 
 import (
+	"net/http"
+
+	"github.com/cyphereza/microservice-crash-course/model"
 	"github.com/cyphereza/microservice-crash-course/usecase"
 	"github.com/labstack/echo"
 )
@@ -24,6 +27,12 @@ func (h *userHandler) createUser(c echo.Context) error {
 
 func (h *userHandler) retrieveUser(c echo.Context) error {
 	name := c.Param("name1")
-	_, _ = h.usecase.RetrieveUser(name)
-	return nil
+	result, err := h.usecase.RetrieveUser(name)
+	if err != nil || len(result) < 1 {
+		returnMessage := new(model.ErrorReturn)
+		returnMessage.ErrorMessage = "Error"
+		return c.JSON(http.StatusOK, returnMessage)
+	}
+
+	return c.JSON(http.StatusOK, result)
 }
