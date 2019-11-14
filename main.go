@@ -12,7 +12,13 @@ func main() {
 	newstruct.Name = "asdasda"
 	newstruct.age = 10
 
-	fmt.Printf("%+v", newstruct)
+	fmt.Printf("%+v\n", newstruct)
+
+	newcustomstruct := make(map[string]interface{})
+	newcustomstruct["name"] = "asdasdad"
+	newcustomstruct["ageage"] = 10
+
+	fmt.Printf("%+v\n", newcustomstruct)
 
 	var helloWorld1 string
 	helloWorld1 = "Hello world 1"
@@ -29,7 +35,7 @@ func main() {
 
 	var helloWorld7 = string("Hello world 7")
 
-	fmt.Println(newstruct.Name)
+	fmt.Println(helloWorld1)
 	fmt.Println(helloWorld2)
 	fmt.Println(helloWorld3)
 	fmt.Println(helloWorld4)
